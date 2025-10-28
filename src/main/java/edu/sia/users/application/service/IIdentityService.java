@@ -1,4 +1,4 @@
-package edu.sia.service;
+package edu.sia.users.application.service;
 
 /**
  * Interface for identity provider service operations.

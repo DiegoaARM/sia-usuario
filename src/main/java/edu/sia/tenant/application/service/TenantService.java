@@ -1,20 +1,23 @@
-package edu.sia.service.impl;
+package edu.sia.tenant.application.service;
 
-import edu.sia.model.Tenant;
-import edu.sia.repository.TenantRepository;
-import edu.sia.service.TenantService;
+import edu.sia.tenant.application.dto.CreateTenantDto;
+import edu.sia.tenant.application.factory.TenantFactory;
+import edu.sia.tenant.domain.entity.Tenant;
+import edu.sia.tenant.domain.repository.TenantRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TenantServiceImpl implements TenantService {
+public class TenantService implements ITenantService {
 
     private final TenantRepository tenantRepository;
+    private final TenantFactory tenantFactory;
 
-    public TenantServiceImpl(TenantRepository tenantRepository) {
+    public TenantService(TenantRepository tenantRepository, TenantFactory tenantFactory) {
         this.tenantRepository = tenantRepository;
+        this.tenantFactory = tenantFactory;
     }
 
     @Override
@@ -28,7 +31,8 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    public Tenant save(Tenant tenant) {
+    public Tenant create(CreateTenantDto dto) {
+        var tenant = tenantFactory.createFromDto(dto);
         return tenantRepository.save(tenant);
     }
 

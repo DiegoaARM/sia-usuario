@@ -1,12 +1,11 @@
 package edu.sia.users.application.service;
 
-import edu.sia.model.Tenant;
-import edu.sia.repository.TenantRepository;
+import edu.sia.tenant.domain.entity.Tenant;
+import edu.sia.tenant.domain.repository.TenantRepository;
 import edu.sia.users.application.dto.CreateUserDto;
 import edu.sia.users.application.factory.UserFactory;
 import edu.sia.users.domain.entity.User;
 import edu.sia.users.domain.repository.IUserRepository;
-import edu.sia.service.IIdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

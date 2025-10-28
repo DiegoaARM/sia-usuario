@@ -1,7 +1,7 @@
-package edu.sia.service.impl;
+package edu.sia.users.infrastructure.aws.service;
 
 import edu.sia.users.infrastructure.aws.factory.CognitoIdentityRequestFactory;
-import edu.sia.service.IIdentityService;
+import edu.sia.users.application.service.IIdentityService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

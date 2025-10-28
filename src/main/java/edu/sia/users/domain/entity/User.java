@@ -1,6 +1,6 @@
 package edu.sia.users.domain.entity;
 
-import edu.sia.model.Tenant;
+import edu.sia.tenant.domain.entity.Tenant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

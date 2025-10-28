@@ -1,6 +1,6 @@
 package edu.sia.users.application.factory;
 
-import edu.sia.model.Tenant;
+import edu.sia.tenant.domain.entity.Tenant;
 import edu.sia.users.application.dto.CreateUserDto;
 import edu.sia.users.domain.entity.User;
 import org.springframework.stereotype.Component;

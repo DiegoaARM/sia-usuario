@@ -1,6 +1,6 @@
-package edu.sia.repository;
+package edu.sia.tenant.domain.repository;
 
-import edu.sia.model.Tenant;
+import edu.sia.tenant.domain.entity.Tenant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
