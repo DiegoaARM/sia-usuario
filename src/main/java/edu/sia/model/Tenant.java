@@ -1,5 +1,6 @@
 package edu.sia.model;
 
+import edu.sia.users.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,8 +31,8 @@ public class Tenant {
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
 
-    @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY)
-    private List<Usuario> usuarios;
+    @OneToMany(mappedBy = "tenantId", fetch = FetchType.LAZY)
+    private List<User> users;
 
     @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY)
     private List<Rol> roles;

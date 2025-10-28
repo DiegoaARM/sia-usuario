@@ -1,5 +1,6 @@
 package edu.sia.model;
 
+import edu.sia.users.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class UsuarioRol {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rol_id")
@@ -31,7 +32,7 @@ public class UsuarioRol {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asignado_por")
-    private Usuario asignadoPor; // quien asignó el rol (puede ser null)
+    private User asignadoPor; // quien asignó el rol (puede ser null)
 
     private LocalDateTime fechaAsignacion;
     private LocalDateTime fechaExpiracion;
