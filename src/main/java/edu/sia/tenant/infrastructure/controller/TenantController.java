@@ -4,6 +4,7 @@ import edu.sia.tenant.application.dto.CreateTenantDto;
 import edu.sia.tenant.domain.entity.Tenant;
 import edu.sia.tenant.application.service.ITenantService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class TenantController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole(\"SIA_TENANT_MANAGER\")")
     public ResponseEntity<Tenant> create(@RequestBody CreateTenantDto dto) {
         return ResponseEntity.ok(ITenantService.create(dto));
     }

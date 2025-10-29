@@ -72,7 +72,7 @@ public class CognitoIdentityService implements IIdentityService {
                 false
         );
         var userId = getUserId(client.adminCreateUser(request));
-        setUserPassword(email, idNumber + "#Vegas");
+        setUserPassword(email, idNumber + "#Sia");
         return userId;
     }
 

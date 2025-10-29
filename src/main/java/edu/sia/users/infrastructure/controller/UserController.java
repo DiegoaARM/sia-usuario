@@ -1,15 +1,17 @@
 package edu.sia.users.infrastructure.controller;
 
 import edu.sia.users.application.dto.CreateUserDto;
+import edu.sia.users.application.dto.UserDto;
 import edu.sia.users.domain.entity.User;
 import edu.sia.users.application.service.IUserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/usuario")
+@RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
@@ -20,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAll() {
+    public ResponseEntity<List<UserDto>> getAll() {
         return ResponseEntity.ok(IUserService.findAll());
     }
 
@@ -32,6 +34,7 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole(\"SYSTEM_USER_ADMINISTRATOR\")")
     public ResponseEntity<User> create(@RequestBody CreateUserDto dto) {
         return ResponseEntity.ok(IUserService.create(dto));
     }

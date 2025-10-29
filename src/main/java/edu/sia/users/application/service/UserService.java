@@ -1,12 +1,16 @@
 package edu.sia.users.application.service;
 
+import edu.sia.role.Role;
 import edu.sia.tenant.domain.entity.Tenant;
 import edu.sia.tenant.domain.repository.TenantRepository;
 import edu.sia.users.application.dto.CreateUserDto;
+import edu.sia.users.application.dto.UserDto;
 import edu.sia.users.application.factory.UserFactory;
+import edu.sia.users.application.mapper.IUserMapper;
 import edu.sia.users.domain.entity.User;
 import edu.sia.users.domain.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,19 +23,21 @@ public class UserService implements IUserService {
     private final IIdentityService identityService;
     private final UserFactory userFactory;
     private final TenantRepository tenantRepository;
+    private final IUserMapper userMapper;
 
     @Autowired
     public UserService(IUserRepository IUserRepository, IIdentityService identityService,
-                      UserFactory userFactory, TenantRepository tenantRepository) {
+                       UserFactory userFactory, TenantRepository tenantRepository, IUserMapper userMapper) {
         this.IUserRepository = IUserRepository;
         this.identityService = identityService;
         this.userFactory = userFactory;
         this.tenantRepository = tenantRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
-    public List<User> findAll() {
-        return IUserRepository.findAll();
+    public List<UserDto> findAll() {
+        return IUserRepository.findAll().stream().map(userMapper::toDto).toList();
     }
 
     @Override
@@ -41,6 +47,12 @@ public class UserService implements IUserService {
 
     @Override
     public User create(CreateUserDto dto) {
+
+        Role role = Role.fromValue(dto.roleName());
+
+        if(!(role.equals(Role.STUDENT) || role.equals(Role.TEACHER)))
+            throw new IllegalArgumentException("No puede crear un usuario con el rol: " + dto.roleName());
+
         // Buscar el tenant
         Tenant tenant = tenantRepository.findById(dto.tenantId())
                 .orElseThrow(() -> new RuntimeException("Tenant no encontrado con id: " + dto.tenantId()));
