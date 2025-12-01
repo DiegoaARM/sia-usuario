@@ -13,8 +13,6 @@ services:
       - "8080"
     networks:
       - app-net
-    deploy:
-      replicas: 5
 
   nginx:
     image: nginx:alpine
