@@ -5,9 +5,8 @@ import edu.sia.tenant.application.factory.TenantFactory;
 import edu.sia.tenant.domain.entity.Tenant;
 import edu.sia.tenant.domain.repository.TenantRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class TenantService implements ITenantService {
@@ -21,33 +20,33 @@ public class TenantService implements ITenantService {
     }
 
     @Override
-    public List<Tenant> findAll() {
+    public Flux<Tenant> findAll() {
         return tenantRepository.findAll();
     }
 
     @Override
-    public Optional<Tenant> findById(Long id) {
+    public Mono<Tenant> findById(Long id) {
         return tenantRepository.findById(id);
     }
 
     @Override
-    public Tenant create(CreateTenantDto dto) {
+    public Mono<Tenant> create(CreateTenantDto dto) {
         var tenant = tenantFactory.createFromDto(dto);
         return tenantRepository.save(tenant);
     }
 
     @Override
-    public Tenant update(Long id, Tenant tenant) {
+    public Mono<Tenant> update(Long id, Tenant tenant) {
         return tenantRepository.findById(id)
-                .map(existing -> {
+                .switchIfEmpty(Mono.error(new RuntimeException("Tenant no encontrado con id: " + id)))
+                .flatMap(existing -> {
                     tenant.setTenantId(existing.getTenantId());
                     return tenantRepository.save(tenant);
-                })
-                .orElseThrow(() -> new RuntimeException("Tenant no encontrado con id: " + id));
+                });
     }
 
     @Override
-    public void delete(Long id) {
-        tenantRepository.deleteById(id);
+    public Mono<Void> delete(Long id) {
+        return tenantRepository.deleteById(id);
     }
 }

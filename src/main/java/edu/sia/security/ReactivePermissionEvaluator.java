@@ -8,13 +8,18 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
+/**
+ * Reactive Permission Evaluator for WebFlux.
+ * Note: WebFlux security method expressions are evaluated reactively,
+ * but this class maintains compatibility with standard PermissionEvaluator interface.
+ */
 @Component
-public class CustomPermissionEvaluator implements PermissionEvaluator {
+public class ReactivePermissionEvaluator implements PermissionEvaluator {
 
     private final RoleService roleService;
 
     @Autowired
-    public CustomPermissionEvaluator(RoleService roleService) {
+    public ReactivePermissionEvaluator(RoleService roleService) {
         this.roleService = roleService;
     }
 
@@ -42,3 +47,4 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
         return hasPermission(authentication, targetId, permission);
     }
 }
+

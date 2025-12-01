@@ -1,16 +1,17 @@
 package edu.sia.tenant.domain.entity;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.relational.core.mapping.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
 @Table(name = "tenants")
 @Data
 @Builder
@@ -18,36 +19,37 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Tenant {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tenantId;
 
-    @Column(unique = true, nullable = false)
+    @Column("name")
     private String name;
 
-    @Column(unique = true, nullable = false)
+    @Column("domain")
     private String domain;
 
-    @Column(unique = true, nullable = false)
+    @Column("email")
     private String email;
 
-    @Column(nullable = false)
+    @Column("phone_number")
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column("country")
     private String country;
 
-    @Column(nullable = false)
+    @Column("language")
     private String language;
 
-    @Column(nullable = false)
+    @Column("timezone")
     private String timezone;
 
-    @Column(nullable = false, columnDefinition = "VARCHAR(20) DEFAULT 'ACTIVE'")
+    @Column("state")
     private String state;
 
-    @CreationTimestamp
+    @CreatedDate
+    @Column("created_at")
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp
+    @LastModifiedDate
+    @Column("updated_at")
     private LocalDateTime updatedAt;
 }

@@ -10,9 +10,11 @@ public class UserFactory {
 
     /**
      * Creates a User entity from a CreateUserDto using the builder pattern.
+     * In R2DBC, we store only the tenant ID, not the entity reference.
      *
-     * @param dto the DTO containing user creation data
+     * @param userId the Cognito user ID
      * @param tenant the tenant entity to associate with the user
+     * @param dto the DTO containing user creation data
      * @return a new User entity
      */
     public User createFromDto(String userId, Tenant tenant, CreateUserDto dto) {
@@ -27,7 +29,7 @@ public class UserFactory {
                 .birthdate(dto.birthdate())
                 .genre(dto.genre())
                 .state("ACTIVE")
-                .tenantId(tenant)
+                .tenantId(tenant.getTenantId())  // Store only the ID in R2DBC
                 .build();
     }
 }

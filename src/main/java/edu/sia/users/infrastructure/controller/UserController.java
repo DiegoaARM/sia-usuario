@@ -7,8 +7,8 @@ import edu.sia.users.application.service.IUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/users")
@@ -22,32 +22,28 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAll() {
-        return ResponseEntity.ok(IUserService.findAll());
+    public Flux<UserDto> getAll() {
+        return IUserService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable Long id) {
-        return IUserService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public Mono<User> getById(@PathVariable Long id) {
+        return IUserService.findById(id);
     }
 
     @PostMapping
     @PreAuthorize("hasRole(\"SYSTEM_USER_ADMINISTRATOR\")")
-    public ResponseEntity<User> create(@RequestBody CreateUserDto dto) {
-        return ResponseEntity.ok(IUserService.create(dto));
+    public Mono<User> create(@RequestBody CreateUserDto dto) {
+        return IUserService.create(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
-        return ResponseEntity.ok(IUserService.update(id, user));
+    public Mono<User> update(@PathVariable Long id, @RequestBody User user) {
+        return IUserService.update(id, user);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        IUserService.delete(id);
-        return ResponseEntity.noContent().build();
+    public Mono<Void> delete(@PathVariable Long id) {
+        return IUserService.delete(id);
     }
 }
-

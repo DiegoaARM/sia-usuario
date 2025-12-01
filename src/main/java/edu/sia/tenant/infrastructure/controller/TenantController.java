@@ -3,11 +3,10 @@ package edu.sia.tenant.infrastructure.controller;
 import edu.sia.tenant.application.dto.CreateTenantDto;
 import edu.sia.tenant.domain.entity.Tenant;
 import edu.sia.tenant.application.service.ITenantService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/tenants")
@@ -21,31 +20,28 @@ public class TenantController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Tenant>> getAll() {
-        return ResponseEntity.ok(ITenantService.findAll());
+    public Flux<Tenant> getAll() {
+        return ITenantService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tenant> getById(@PathVariable Long id) {
-        return ITenantService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public Mono<Tenant> getById(@PathVariable Long id) {
+        return ITenantService.findById(id);
     }
 
     @PostMapping
     @PreAuthorize("hasRole(\"SIA_TENANT_MANAGER\")")
-    public ResponseEntity<Tenant> create(@RequestBody CreateTenantDto dto) {
-        return ResponseEntity.ok(ITenantService.create(dto));
+    public Mono<Tenant> create(@RequestBody CreateTenantDto dto) {
+        return ITenantService.create(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tenant> update(@PathVariable Long id, @RequestBody Tenant tenant) {
-        return ResponseEntity.ok(ITenantService.update(id, tenant));
+    public Mono<Tenant> update(@PathVariable Long id, @RequestBody Tenant tenant) {
+        return ITenantService.update(id, tenant);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        ITenantService.delete(id);
-        return ResponseEntity.noContent().build();
+    public Mono<Void> delete(@PathVariable Long id) {
+        return ITenantService.delete(id);
     }
 }

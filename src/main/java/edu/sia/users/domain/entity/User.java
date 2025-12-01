@@ -1,17 +1,17 @@
 package edu.sia.users.domain.entity;
 
-import edu.sia.tenant.domain.entity.Tenant;
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.relational.core.mapping.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
 @Table(name = "usuarios")
 @Data
 @Builder
@@ -19,45 +19,45 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long usuarioId;
 
-    @Column(unique = true)
+    @Column("email")
     private String email;
 
-    @Column(nullable = false)
+    @Column("given_name")
     private String givenName;
 
-    @Column(nullable = false)
+    @Column("family_name")
     private String familyName;
 
-    @Column(nullable = false)
+    @Column("id_type")
     private String idType; // Tipo de documento ('CC', 'CE', 'PP', etc.)
 
-    @Column(nullable = false)
+    @Column("id_number")
     private String idNumber; // Número de documento
 
-    @Column(nullable = false)
+    @Column("role_name")
     private String roleName;
 
-    @Column(nullable = false)
+    @Column("phone_number")
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column("birthdate")
     private LocalDate birthdate;
 
-    @Column(nullable = false)
+    @Column("genre")
     private String genre; // 'M' para masculino, 'F' para femenino, no binario, etc.
 
-    @Column(nullable = false)
+    @Column("state")
     private String state; // 'ACTIVE', 'INACTIVE', etc.
 
+    @Column("last_login")
     private LocalDateTime lastLogin;
 
-    @CreationTimestamp
+    @CreatedDate
+    @Column("created_at")
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_id")
-    private Tenant tenantId;
+    @Column("tenant_id")
+    private Long tenantId;
 }
