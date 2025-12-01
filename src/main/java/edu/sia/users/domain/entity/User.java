@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Table(name = "usuarios")
+@Table(name = "\"usuarios\"")
 @Data
 @Builder
 @NoArgsConstructor

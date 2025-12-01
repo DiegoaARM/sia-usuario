@@ -4,8 +4,6 @@ import edu.sia.users.application.dto.CreateUserDto;
 import edu.sia.users.application.dto.UserDto;
 import edu.sia.users.domain.entity.User;
 import edu.sia.users.application.service.IUserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -32,7 +30,6 @@ public class UserController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole(\"SYSTEM_USER_ADMINISTRATOR\")")
     public Mono<User> create(@RequestBody CreateUserDto dto) {
         return IUserService.create(dto);
     }
