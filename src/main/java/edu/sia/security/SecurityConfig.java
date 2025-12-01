@@ -25,7 +25,7 @@ public class SecurityConfig {
         http
                 // Autorizaciones
                 .authorizeExchange(auth -> auth
-                        .anyExchange().authenticated()
+                        .anyExchange().permitAll()
                 )
                 // Habilitar OAuth2 Resource Server con JWT
                 .oauth2ResourceServer(oauth2 -> oauth2
