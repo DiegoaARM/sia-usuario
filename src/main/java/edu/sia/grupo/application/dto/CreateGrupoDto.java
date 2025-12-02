@@ -15,6 +15,7 @@ public class CreateGrupoDto {
     @NotNull(message = "El ID de la asignatura es obligatorio")
     private Long asignaturaId;
 
+
     @NotBlank(message = "El periodo es obligatorio")
     @Pattern(regexp = "\\d{4}-[12]", message = "El periodo debe tener el formato YYYY-1 o YYYY-2")
     private String periodo;

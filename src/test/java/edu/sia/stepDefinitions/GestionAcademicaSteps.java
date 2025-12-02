@@ -38,7 +38,8 @@ public class GestionAcademicaSteps {
         String body = """
         {
           "nombre": "Grupo A",
-          "asignaturaId": 1
+          "asignaturaId": 1,
+          "docenteId" : 1
         }
         """;
 
@@ -62,9 +63,9 @@ public class GestionAcademicaSteps {
 
         String body = """
         {
-          "estudianteId": 1,
-          "componente": "Parcial 1",
-          "nota": 4.5
+          "matriculaId": 1,
+          "componenteId": 1,
+          "valor": 4.5
         }
         """;
 
@@ -88,7 +89,7 @@ public class GestionAcademicaSteps {
 
         String body = """
         {
-          "nota": 4.8,
+          "valor": 4.8,
           "justificacion": "Corrección por error de cálculo"
         }
         """;
